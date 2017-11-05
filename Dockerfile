@@ -21,7 +21,10 @@ RUN git clone https://github.com/PolonaS/switch-test.git /var/www/switch-test
 ADD .env /var/www/switch-test/.env
 
 RUN composer install
+RUN php artisan migrate
+RUN php artisan db:seed
+RUN php artisan users:create
 
 EXPOSE 8080
 
-CMD ["php", "artisan", "serve", "--port=8080"]
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "public/"]
