@@ -19,12 +19,10 @@ WORKDIR /var/www/switch-test
 RUN git clone https://github.com/PolonaS/switch-test.git /var/www/switch-test
 
 ADD .env /var/www/switch-test/.env
+ADD run.sh /var/www/switch-test/run.sh
 
-RUN composer install
-RUN php artisan migrate
-RUN php artisan db:seed
-RUN php artisan users:create
+RUN chmod +x /var/www/switch-test/run.sh
 
 EXPOSE 8080
 
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "public/"]
+CMD ["/var/www/switch-test/run.sh"]
